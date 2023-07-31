@@ -15,9 +15,11 @@ async function bootstrap() {
     botService.subscribe(msg, city);
   });
 
-  botService.bot.onText(/\/unsubscribe (.+)/, async (msg, match) => {
-    const chatId = msg.chat.id
-    await botService.unsubscribe(chatId);
+  botService.bot.on("message", async (msg, match) => {
+    if (msg.text === '/unsubscribe'){
+      const chatId = msg.chat.id
+      await botService.unsubscribe(chatId);
+    }
   });
 
   await app.listen(3000, ()=> {

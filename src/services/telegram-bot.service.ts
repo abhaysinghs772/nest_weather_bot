@@ -75,6 +75,9 @@ export class TelegramBotService {
                     chat_id: chatId
                 }
             });
+            console.log(user);
+            
+
             if (!user) return;
             if (user && user.isSubscribed) {
                 user.isSubscribed = false;
