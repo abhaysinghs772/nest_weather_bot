@@ -24,7 +24,7 @@ export class TelegramBotService {
 
         this.bot = new TelegramBot(this.TELEGRAM_API_KEY, { polling: true });
 
-        cron.schedule('*/5 * * * *', () => {
+        cron.schedule('*/1 * * * *', () => {
             this.sendWeatherUpdates();
         });
     }
@@ -39,12 +39,15 @@ export class TelegramBotService {
 
             // save user's info in db here and puth the is subscribed flag to true 
             let subscribed = await this.userRepo.findOneBy({chat_id : msg.chat.id})
-            if (subscribed && city!== subscribed.city){
-                // then udate the city of user only 
+            if (subscribed){
+                // then update the city of user only 
+
+                subscribed.isSubscribed = true; 
                 subscribed.city = city
                 subscribed.updated_at = new Date();
-                await this.userRepo.save(subscribed);
-                console.log(`user's city has succesfully been updated: `, subscribed);
+                // await this.userRepo.save(subscribed);
+                let updated = await this.userRepo.update(subscribed.user_id, subscribed);
+                console.log(`user's city has succesfully been updated: `, updated);
                 this.bot.sendMessage(chatId, message);
             } else {
                 let userData = new User();

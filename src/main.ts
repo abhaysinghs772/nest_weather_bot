@@ -16,7 +16,7 @@ async function bootstrap() {
   });
 
   botService.bot.on("message", async (msg, match) => {
-    if (msg.text === '/unsubscribe'){
+    if (msg.text.indexOf('/unsubscribe') !== -1){
       const chatId = msg.chat.id
       await botService.unsubscribe(chatId);
     }
