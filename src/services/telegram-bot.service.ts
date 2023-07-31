@@ -81,8 +81,8 @@ export class TelegramBotService {
             if (!user) return;
             if (user && user.isSubscribed) {
                 user.isSubscribed = false;
-                let unsubscribed = await this.userRepo.save(user);
-                console.log(`user successfully unSubscribed`, unsubscribed);
+                await this.userRepo.save(user);
+                console.log(`user successfully unSubscribed`, user);
 
                 const message = `See You soon, , miss you 😔`;
                 this.bot.sendMessage(chatId, message);
