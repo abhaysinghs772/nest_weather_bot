@@ -24,7 +24,7 @@ export class TelegramBotService {
 
         this.bot = new TelegramBot(this.TELEGRAM_API_KEY, { polling: true });
 
-        cron.schedule('*/1 * * * *', () => {
+        cron.schedule('*/5 * * * *', () => {
             this.sendWeatherUpdates();
         });
     }
